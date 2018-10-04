@@ -1,9 +1,98 @@
 ---
 title: "Methods of inference"
-output: github_document
+date: 2018-10-04
+output: 
+     html_document:
+       toc: true
+       toc_float: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+# Sampling Distribution
+
+Rationale:
+
+We are insterested in the population parameters: $\mu, \sigma^2, p$. We need to get observed values (statistics) from samples in order to make inference about the population parameters. The distribution of statistics obtained fromn samples are called __sampling distribution__.
+
+### Sampling distribution
+
+1. estimation of mean $\mu$ is $\overline{X}$
+
+$$\overline{X} = \frac{\sum\limits_{i=1}^n{X_i}}{n}$$
+
+2. why $\overline{X}$ is a good estimator of $\mu$
+
+*    $E(\overline{X}) = \mu$ means this is an unbiased estimator
+*    the standard deviation of estimator $\overline{X}$ is small
+
+3. distribution of $\overline{X}$
+
+if n is large enough (n >= 30), then the underlying distribution of $\overline{X}$ is normal by CLT. 
+$$\overline{X} \sim N(\mu,\frac{\sigma^2}{n} ) $$
+
+# statistical inference
+
+*    point estimation
+*    interval estimation
+*    hypothesis testing
+*    prediction
+
+# point estimation
+
+for example, $\overline{X}$ can be a point estimate for $\mu$. But point estimate is generally speaking not the exact value of true parameter, so we need to construct condidence interval for the point estimate which contains the plausible values for population parameter.
+
+# interval estimation
+
+### One sample mean, known variance
+
+At significance level $\alpha$ 
+
+$$CI: \overline{X} \pm z_{1-\alpha/2} \frac{\sigma}{\sqrt{n}}$$
+
+$$ \frac{\overline{X} - \mu}{\sigma/\sqrt{n}} \sim N(0,1)$$
+
+Example: $\overline{X} = 175$, $\sigma = 15$, $n = 10$, $\overline{X} \sim N(175, \frac{15^2}{10})$
+then the 95% CI for the true mean is calculated as follow:
+
+```{r}
+lb <- 175 - qnorm(0.975) * 15/sqrt(10)
+up <- 175 + qnorm(0.975) * 15/sqrt(10)
+c(lb, up)
+```
+
+What if we want a 99% CI?
+
+```{r}
+lb <- 175 - qnorm(0.995) * 15/sqrt(10)
+up <- 175 + qnorm(0.995) * 15/sqrt(10)
+c(lb, up)
+```
+
+we can see that as confidence level increase, the CI become narrower.
+
+### One sample mean, unknown variance
+
+Since population variance is unknown, we need to use $s^2$ as an estimate for $\sigma^2$
+
+$$ \frac{\overline{X} - \mu}{s/\sqrt{n}} \sim t_{n-1}$$
+
+$$CI: \overline{X} \pm t_{n-1, 1-\alpha/2} \frac{s}{\sqrt{n}}$$
+
+Example: $\overline{X} = 175$, $s = 15$,$n = 10$, $\overline{X} \sim N(175, \frac{15^2}{10})$
+
+Calculate the 95% confidence interval:
+
+```{r}
+lb <- 175 - qt(0.975, df=9) * 15/sqrt(10)
+up <- 175 + qt(0.975, df=9) * 15/sqrt(10)
+c(lb, up)
+```
+
+### confidence interval illustration
+
+### look at Z distribution and t distribution
+
 
