@@ -292,11 +292,327 @@ up &lt;- 175 + qt(0.975, df=9) * 15/sqrt(10)
 c(lb, up)</code></pre>
 <pre><code>## [1] 164.2696 185.7304</code></pre>
 </div>
+<div id="variance-estimation" class="section level3">
+<h3>variance estimation</h3>
+<p>The sample variance <span class="math inline">\(s^2\)</span> is an unbiased estimator for population variance <span class="math inline">\(\sigma^2\)</span></p>
+<p>CI for variance:</p>
+</div>
 <div id="confidence-interval-illustration" class="section level3">
 <h3>confidence interval illustration</h3>
 </div>
 <div id="look-at-z-distribution-and-t-distribution" class="section level3">
 <h3>look at Z distribution and t distribution</h3>
+<table>
+<colgroup>
+<col width="100%"></col>
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"># Hypothesis testing</td>
+</tr>
+<tr class="even">
+<td align="left">### One sample, one sided tests, with known variance, normal distribution</td>
+</tr>
+<tr class="odd">
+<td align="left">Test for <strong>mean</strong> of normal distribution with <strong>known variance</strong></td>
+</tr>
+<tr class="even">
+<td align="left">State hypothesis: <span class="math display">\[ H_0: \mu = \mu_0\]</span> <span class="math display">\[H_1: \mu &lt; \mu_0\]</span></td>
+</tr>
+<tr class="odd">
+<td align="left">Compute test statistics: <span class="math display">\[z = \frac{\overline{X} - \mu_0}{\sigma/\sqrt{n}} \sim N(0,1) \]</span></td>
+</tr>
+<tr class="even">
+<td align="left">Reject H0 if <span class="math display">\[z &lt; -z_{\alpha}\]</span></td>
+</tr>
+<tr class="odd">
+<td align="left">### One sample, 2-sided test, with known variance, normal distribution</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math display">\[ H_0: \mu = \mu_0\]</span> <span class="math display">\[H_1: \mu \ne \mu_0\]</span></td>
+</tr>
+<tr class="odd">
+<td align="left">test statistics:</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math display">\[z = \frac{\overline{X} - \mu_0}{\sigma/\sqrt{n}} \sim N(0,1) \]</span></td>
+</tr>
+<tr class="odd">
+<td align="left">reject H0 if <span class="math display">\[|z| &gt; z_{1-\alpha/2}\]</span></td>
+</tr>
+<tr class="even">
+<td align="left">### One sample, 1 sided, unknown variance</td>
+</tr>
+<tr class="odd">
+<td align="left">Hypothesis: <span class="math display">\[ H_0: \mu = \mu_0\]</span></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math display">\[H_1: \mu &lt; \mu_0\]</span></td>
+</tr>
+<tr class="odd">
+<td align="left">test statistics: <span class="math display">\[t = \frac{\overline{X} - \mu_0}{s/\sqrt{n}} \sim t_{n-1} \]</span></td>
+</tr>
+<tr class="even">
+<td align="left">Reject H0 if: <span class="math display">\[t &lt; -t_{n-1, \alpha}\]</span></td>
+</tr>
+<tr class="odd">
+<td align="left">### One sample, 2 sided, unknown variance</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math display">\[ H_0: \mu = \mu_0\]</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math display">\[H_1: \mu \ne \mu_0\]</span></td>
+</tr>
+<tr class="even">
+<td align="left">test statistics: <span class="math display">\[t = \frac{\overline{X} - \mu_0}{s/\sqrt{n}} \sim t_{n-1} \]</span></td>
+</tr>
+<tr class="odd">
+<td align="left">reject H0 if: <span class="math display">\[|t| &gt; t_{n-1, 1-\alpha/2}\]</span></td>
+</tr>
+<tr class="even">
+<td align="left">### hypothesis testing code in R</td>
+</tr>
+<tr class="odd">
+<td align="left">Example 1: infarct size in patients; we want to know if the infact size in the treated patients truely different from the mean of untreated patients, so this is a <strong>2 sided test</strong></td>
+</tr>
+<tr class="even">
+<td align="left">Given that <span class="math inline">\(\overline{X} = 16\)</span>, $ n = 40$, <span class="math inline">\(\mu = 16\)</span>, <span class="math inline">\(\alpha = 0.05\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left">Hypothsis: <span class="math display">\[H_0: \mu = 25\]</span></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math display">\[H_a : \mu \ne 25\]</span></td>
+</tr>
+<tr class="odd">
+<td align="left">Since we do not know population variance, we will use t test statistics: <span class="math display">\[t = \frac{16-25}{10/\sqrt{40}} = -5.6921\]</span></td>
+</tr>
+<tr class="even">
+<td align="left">then compare with critical value of <span class="math inline">\(t_{0.975,39}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>r qt(0.975, 39)</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>## [1] 2.022691</code></td>
+</tr>
+<tr class="odd">
+<td align="left">Thus $|t| &gt; 2.02 $, we should reject null.</td>
+</tr>
+<tr class="even">
+<td align="left">we can also compute p-value:</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>r 2*pt(-5.6921,39)</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>## [1] 1.386373e-06</code></td>
+</tr>
+<tr class="odd">
+<td align="left">then we get very small p value, which leads to rejection of H0</td>
+</tr>
+</tbody>
+</table>
+<p>Example 2: # We want to test the hypothesis that mothers with low socio-economic status deliver babies with lower than ‘normal’ birthweights. Suppose the true mean birthweight follows a normal distribution with mean of 120oz and standard deviation of 24oz.</p>
+<p>Hypothesis: <span class="math display">\[\mu = 120\]</span></p>
+<p><span class="math display">\[\mu &lt; 120\]</span></p>
+<p>Since we don’t know the population variance, then we use <span class="math inline">\(s^2 = 24^2\)</span>, we will use t test.</p>
+<p>First, we generate a sample of 50 from normal distribution <span class="math inline">\(N(120, 24)\)</span></p>
+<pre class="r"><code>set.seed(3)
+bweight &lt;- rnorm(50,120,24)</code></pre>
+<p>then we can do t test on this “observed” data</p>
+<pre class="r"><code>t.test(bweight, alternative='two.sided', mu = 120)</code></pre>
+<pre><code>## 
+##  One Sample t-test
+## 
+## data:  bweight
+## t = -0.50797, df = 49, p-value = 0.6138
+## alternative hypothesis: true mean is not equal to 120
+## 95 percent confidence interval:
+##  112.3968 124.5350
+## sample estimates:
+## mean of x 
+##  118.4659</code></pre>
+<p>since the p value is large, then we do not reject the null.</p>
+<p>If we want to do one sided test: either greater or less than the population mean</p>
+<pre class="r"><code>t.test(bweight, alternative = 'less', mu = 120)</code></pre>
+<pre><code>## 
+##  One Sample t-test
+## 
+## data:  bweight
+## t = -0.50797, df = 49, p-value = 0.3069
+## alternative hypothesis: true mean is less than 120
+## 95 percent confidence interval:
+##      -Inf 123.5292
+## sample estimates:
+## mean of x 
+##  118.4659</code></pre>
+<pre class="r"><code>t.test(bweight, alternative = 'greater', mu = 120)</code></pre>
+<pre><code>## 
+##  One Sample t-test
+## 
+## data:  bweight
+## t = -0.50797, df = 49, p-value = 0.6931
+## alternative hypothesis: true mean is greater than 120
+## 95 percent confidence interval:
+##  113.4025      Inf
+## sample estimates:
+## mean of x 
+##  118.4659</code></pre>
+</div>
+<div id="two-sample-means-hypothesis-testing" class="section level2">
+<h2># Two sample means hypothesis testing</h2>
+<div id="paired-test" class="section level3">
+<h3>paired test</h3>
+<p>Example: test for cholesterol level reduction</p>
+<pre class="r"><code>LDL &lt;- tibble(weight_before = c(201,231,221,260,228,237,326,235,240,267,284,201),
+              weight_after = c(200,236,216,233,224,216,296,195,207,247,210,209),
+              d = weight_after - weight_before)
+LDL</code></pre>
+<pre><code>## # A tibble: 12 x 3
+##    weight_before weight_after     d
+##            &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;
+##  1           201          200    -1
+##  2           231          236     5
+##  3           221          216    -5
+##  4           260          233   -27
+##  5           228          224    -4
+##  6           237          216   -21
+##  7           326          296   -30
+##  8           235          195   -40
+##  9           240          207   -33
+## 10           267          247   -20
+## 11           284          210   -74
+## 12           201          209     8</code></pre>
+<p>Hypothesis testing: <span class="math display">\[H_0 : \mu_1 = \mu_2\]</span> <span class="math display">\[H_a: \mu_1 \ne \mu_2\]</span></p>
+<p>Since we do not know population variance, we will use one sample t test for <strong>d</strong>. Testing statistics: <span class="math display">\[t = \frac{\overline{d}-0}{s_d/\sqrt{n}}\]</span></p>
+<p>Do the calculation manually:</p>
+<pre class="r"><code>s_d &lt;- sd(LDL$d)
+se &lt;- s_d/sqrt(length(LDL$d))
+t &lt;- mean(LDL$d)/se
+t</code></pre>
+<pre><code>## [1] -3.020113</code></pre>
+<pre class="r"><code># find critical value
+qt(0.975, length(LDL$d)-1)</code></pre>
+<pre><code>## [1] 2.200985</code></pre>
+<pre class="r"><code># confidence interval
+lb &lt;- mean(LDL$d) - qt(0.975, length(LDL$d)-1) * se
+up &lt;- mean(LDL$d) + qt(0.975, length(LDL$d)-1) * se
+c(lb,up)</code></pre>
+<pre><code>## [1] -34.863642  -5.469691</code></pre>
+<p>Since <span class="math inline">\(|t| &gt; t_{0.975, 11}\)</span>, we have evidence to reject the null.</p>
+<p>Or we can do the paired t test in R, and arrive at the same conclusion</p>
+<pre class="r"><code>t.test(LDL$weight_after, LDL$weight_before, paired=T) # difference = after - before</code></pre>
+<pre><code>## 
+##  Paired t-test
+## 
+## data:  LDL$weight_after and LDL$weight_before
+## t = -3.0201, df = 11, p-value = 0.01165
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -34.863642  -5.469691
+## sample estimates:
+## mean of the differences 
+##               -20.16667</code></pre>
+</div>
+<div id="two-independent-sample-mean-test" class="section level3">
+<h3>two independent sample mean test</h3>
+<p>Example: oral contraceptive</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>n</th>
+<th><span class="math inline">\(\overline{X}\)</span></th>
+<th>s</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Non OC</td>
+<td>10</td>
+<td>1.08</td>
+<td>0.16</td>
+</tr>
+<tr class="even">
+<td>OC</td>
+<td>10</td>
+<td>1</td>
+<td>0.14</td>
+</tr>
+</tbody>
+</table>
+<p>Goal: Is there any difference in this two groups?</p>
+<p><span class="math display">\[H_0 : \mu_1 = \mu_2\]</span> <span class="math display">\[H_a: \mu_1 \ne \mu_2\]</span></p>
+<p>Assume that the BMD in two populations are normally distributed, then <span class="math inline">\(X_1 \sim N(\mu_1, \sigma_1^2)\)</span>, <span class="math inline">\(X_2 \sim N(\mu_2, \sigma_2^2)\)</span>.</p>
+<p>First we need test if these population have equal variance:<br />
+<span class="math inline">\(H_0 : \sigma_1^2 = \sigma_2^2\)</span> vs. <span class="math inline">\(H_a : \sigma_1^2 \ne \sigma_2^2\)</span></p>
+<p>Calculate F test statistics: <span class="math display">\[F = \frac{s_1^2}{s_2^2} \sim F_(n_1-1, n_2-1)\]</span></p>
+<pre class="r"><code>F_test &lt;- 0.16^2 / 0.14^2
+F_test</code></pre>
+<pre><code>## [1] 1.306122</code></pre>
+<pre class="r"><code>F_crit &lt;- qf(0.975, df1 = 9, df2 = 9)
+F_crit</code></pre>
+<pre><code>## [1] 4.025994</code></pre>
+<p>Since $F_test &lt; F_{critical} $, we fail to reject the null. We do not have sufficient evidence to declare the difference between two population variances.</p>
+<p>So now we can do <strong>two sided</strong> t test for two independent populations with equal population variance (unknown)</p>
+<p>Calculate test statistics: <span class="math display">\[t = \frac{\overline{X_1}-\overline{X_2}}{s\sqrt{1/n_1+1/n_2}}\]</span></p>
+<p>where the pooled variance is calculated as follow: <span class="math display">\[s_{pooled}^2 = \frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1+n_2-2} \]</span></p>
+<pre class="r"><code>s_pool = sqrt((9*0.16^2 + 9*0.14^2)/18)
+s_pool</code></pre>
+<pre><code>## [1] 0.150333</code></pre>
+<pre class="r"><code>se &lt;- s_pool * sqrt(1/10 + 1/10)
+t_stat &lt;- (1.08 - 1)/se
+
+t_stat</code></pre>
+<pre><code>## [1] 1.189928</code></pre>
+<pre class="r"><code>t_crit &lt;- qt(0.975, 18)
+t_crit</code></pre>
+<pre><code>## [1] 2.100922</code></pre>
+<p>Since $t_{stat} &lt; t_{crit} $, we cannot reject the null. So at the significance level of 0.05, there is not enough evidence for us to conclude the mean BMD of Non OC group is different from that of OC group.</p>
+<p>Find 95% Confidence Interval :</p>
+<pre class="r"><code>lb &lt;- 1.08 - 1 - t_crit * se
+up &lt;- 1.08 - 1 + t_crit * se
+c(lb, up)</code></pre>
+<pre><code>## [1] -0.06124697  0.22124697</code></pre>
+<hr />
+<p>Example 2: # Effect of caffeine on muscle metabolism.</p>
+<p>15 men were randomly selected to take a capsule containing pure caffeine one hour before the test. The other group of 20 men received a placebo capsule. During each exercise the subject’s respiratory exchange ratio (RER) was measured. The question of interest to the experimenter was whether, on average, caffeine consumption has an effect on RER. The two samples came from two underlying normal distributions: N(94.2,5.6), N(105.5,8.1) and are independent.</p>
+<pre class="r"><code># generate two sample
+set.seed(2)
+caff &lt;- rnorm(15, 94.2, 5.6)
+placebo &lt;- rnorm(20, 105.5, 8.1)</code></pre>
+<p>First, we need to test for equality of two variances</p>
+<pre class="r"><code>var.test(placebo,caff, alternative = &quot;two.sided&quot;)</code></pre>
+<pre><code>## 
+##  F test to compare two variances
+## 
+## data:  placebo and caff
+## F = 3.1938, num df = 19, denom df = 14, p-value = 0.03128
+## alternative hypothesis: true ratio of variances is not equal to 1
+## 95 percent confidence interval:
+##  1.116416 8.453637
+## sample estimates:
+## ratio of variances 
+##           3.193754</code></pre>
+<p>we saw that <span class="math inline">\(p_{value} = 0.03128 &lt; 0.05\)</span>, so we will reject the null conclude that at significance level of 0.05, these two populations variances are not equal.</p>
+<p>then we can set up the testing:</p>
+<pre class="r"><code>t_result &lt;- t.test(caff, placebo, var.equal = FALSE, paired = FALSE) 
+t_result</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  caff and placebo
+## t = -4.361, df = 30.873, p-value = 0.0001336
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -16.890875  -6.125212
+## sample estimates:
+## mean of x mean of y 
+##  95.64136 107.14940</code></pre>
+<p>based on the result, we saw that <span class="math inline">\(p &lt; 0.025\)</span>, so we should reject the null and conclude that at significance level of 0.05, the mean of two groups are different. The confidence interval is (-16.89, -6.125), so we could safely say that the mean of RER in caffeine group is lower.</p>
+</div>
 </div>
 </div>
 
