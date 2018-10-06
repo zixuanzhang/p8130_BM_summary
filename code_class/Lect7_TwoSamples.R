@@ -19,6 +19,7 @@ sd_diff<-sd(weight_diff)
 
 test_weight<-mean(weight_diff)/(sd_diff/sqrt(length(weight_diff)))
 
+test_weight
 # Use the t.test() built-in function
 # What alternative are you testing?
                           
