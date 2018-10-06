@@ -360,6 +360,11 @@ t_result
 based on the result, we saw that $p < 0.025$, so we should reject the null and conclude that at significance level of 0.05, the mean of two groups are different. 
 The confidence interval is (-16.89, -6.125), so we could safely say that the mean of RER in caffeine group is lower. 
 
+# Practice
+-------------------------------------------------------
+
+
+
 
 
 
