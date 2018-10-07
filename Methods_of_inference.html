@@ -576,42 +576,49 @@ t_crit</code></pre>
 up &lt;- 1.08 - 1 + t_crit * se
 c(lb, up)</code></pre>
 <pre><code>## [1] -0.06124697  0.22124697</code></pre>
-<hr />
-<p>Example 2: # Effect of caffeine on muscle metabolism.</p>
-<p>15 men were randomly selected to take a capsule containing pure caffeine one hour before the test. The other group of 20 men received a placebo capsule. During each exercise the subject’s respiratory exchange ratio (RER) was measured. The question of interest to the experimenter was whether, on average, caffeine consumption has an effect on RER. The two samples came from two underlying normal distributions: N(94.2,5.6), N(105.5,8.1) and are independent.</p>
-<pre class="r"><code># generate two sample
-set.seed(2)
-caff &lt;- rnorm(15, 94.2, 5.6)
-placebo &lt;- rnorm(20, 105.5, 8.1)</code></pre>
-<p>First, we need to test for equality of two variances</p>
-<pre class="r"><code>var.test(placebo,caff, alternative = &quot;two.sided&quot;)</code></pre>
-<pre><code>## 
-##  F test to compare two variances
-## 
-## data:  placebo and caff
-## F = 3.1938, num df = 19, denom df = 14, p-value = 0.03128
-## alternative hypothesis: true ratio of variances is not equal to 1
-## 95 percent confidence interval:
-##  1.116416 8.453637
-## sample estimates:
-## ratio of variances 
-##           3.193754</code></pre>
-<p>we saw that <span class="math inline">\(p_{value} = 0.03128 &lt; 0.05\)</span>, so we will reject the null conclude that at significance level of 0.05, these two populations variances are not equal.</p>
-<p>then we can set up the testing:</p>
-<pre class="r"><code>t_result &lt;- t.test(caff, placebo, var.equal = FALSE, paired = FALSE) 
-t_result</code></pre>
-<pre><code>## 
-##  Welch Two Sample t-test
-## 
-## data:  caff and placebo
-## t = -4.361, df = 30.873, p-value = 0.0001336
-## alternative hypothesis: true difference in means is not equal to 0
-## 95 percent confidence interval:
-##  -16.890875  -6.125212
-## sample estimates:
-## mean of x mean of y 
-##  95.64136 107.14940</code></pre>
-<p>based on the result, we saw that <span class="math inline">\(p &lt; 0.025\)</span>, so we should reject the null and conclude that at significance level of 0.05, the mean of two groups are different. The confidence interval is (-16.89, -6.125), so we could safely say that the mean of RER in caffeine group is lower.</p>
+<table style="width:29%;">
+<colgroup>
+<col width="29%"></col>
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>Example 2: # Effect of caffeine on muscle metabolism.</td>
+</tr>
+<tr class="even">
+<td>15 men were randomly selected to take a capsule containing pure caffeine one hour before the test. The other group of 20 men received a placebo capsule. During each exercise the subject’s respiratory exchange ratio (RER) was measured. The question of interest to the experimenter was whether, on average, caffeine consumption has an effect on RER. The two samples came from two underlying normal distributions: N(94.2,5.6), N(105.5,8.1) and are independent.</td>
+</tr>
+<tr class="odd">
+<td><code>r # generate two sample set.seed(2) caff &lt;- rnorm(15, 94.2, 5.6) placebo &lt;- rnorm(20, 105.5, 8.1)</code></td>
+</tr>
+<tr class="even">
+<td>First, we need to test for equality of two variances</td>
+</tr>
+<tr class="odd">
+<td><code>r var.test(placebo,caff, alternative = &quot;two.sided&quot;)</code></td>
+</tr>
+<tr class="even">
+<td><code>## ##  F test to compare two variances ## ## data:  placebo and caff ## F = 3.1938, num df = 19, denom df = 14, p-value = 0.03128 ## alternative hypothesis: true ratio of variances is not equal to 1 ## 95 percent confidence interval: ##  1.116416 8.453637 ## sample estimates: ## ratio of variances ##           3.193754</code></td>
+</tr>
+<tr class="odd">
+<td>we saw that <span class="math inline">\(p_{value} = 0.03128 &lt; 0.05\)</span>, so we will reject the null conclude that at significance level of 0.05, these two populations variances are not equal.</td>
+</tr>
+<tr class="even">
+<td>then we can set up the testing:</td>
+</tr>
+<tr class="odd">
+<td><code>r t_result &lt;- t.test(caff, placebo, var.equal = FALSE, paired = FALSE) t_result</code></td>
+</tr>
+<tr class="even">
+<td><code>## ##  Welch Two Sample t-test ## ## data:  caff and placebo ## t = -4.361, df = 30.873, p-value = 0.0001336 ## alternative hypothesis: true difference in means is not equal to 0 ## 95 percent confidence interval: ##  -16.890875  -6.125212 ## sample estimates: ## mean of x mean of y ##  95.64136 107.14940</code></td>
+</tr>
+<tr class="odd">
+<td>based on the result, we saw that <span class="math inline">\(p &lt; 0.025\)</span>, so we should reject the null and conclude that at significance level of 0.05, the mean of two groups are different. The confidence interval is (-16.89, -6.125), so we could safely say that the mean of RER in caffeine group is lower.</td>
+</tr>
+<tr class="even">
+<td># Practice</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
